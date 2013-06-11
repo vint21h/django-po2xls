@@ -7,11 +7,11 @@
 from setuptools import setup, find_packages
 
 # metadata
-VERSION = (0, 0, 1)
+VERSION = (0, 0, 2)
 __version__ = '.'.join(map(str, VERSION))
 
 setup(
-    name="po2xls",
+    name="django-po2xls",
     version=__version__,
     packages=find_packages(),
     install_requires=['django-rosetta==0.6.8', 'polib==1.0.3', 'xlwt==0.7.4', ],
@@ -20,7 +20,7 @@ setup(
     description="Convert gettext .po files to .xls",
     license="GPLv3 or later",
     url="https://github.com/vint21h/django-po2xls",
-    download_url="https://github.com/vint21h/django-po2xls/tags",
+    download_url="https://github.com/vint21h/django-po2xls/archive/%s.tar.gz" % __version__,
     zip_safe=False,
     include_package_data=True,
     classifiers=[

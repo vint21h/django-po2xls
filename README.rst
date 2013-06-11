@@ -11,7 +11,7 @@ A django-po2xls documentation
 Installation
 ------------
 * Obtain your copy of source code from git repository: ``git clone https://github.com/vint21h/django-po2xls.git``. Or download latest release from https://github.com/vint21h/django-po2xls/tags.
-* Run ``python ./setup.py install`` from repository source tree or unpacked archive under root user.
+* Run ``python ./setup.py install`` from repository source tree or unpacked archive. Or use pip: ``pip install django-po2xls``.
 
 Configuration
 -------------
@@ -21,6 +21,10 @@ INSTALLED_APPS = (
     # ...
     'po2xls',
 )
+
+Use
+---
+Just run ``./manage.py po-to-xls`` and .xls files dropped near your project .po files.
 
 Licensing
 ---------
