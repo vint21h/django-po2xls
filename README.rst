@@ -15,16 +15,19 @@ Installation
 
 Configuration
 -------------
-List this application in the INSTALLED_APPS portion of your settings file. Your settings file might look something like:
+Add ``'po2xls'`` to ``settings.INSTALLED_APPS``.
 
-INSTALLED_APPS = (
-    # ...
-    'po2xls',
+    INSTALLED_APPS = (
+        ...,
 
-)
+        'po2xls',
 
-Use
----
+        ...,
+
+    )
+
+Usage
+-----
 Just run ``po-to-xls`` django management command and .xls files dropped near your all of your project .po files.
 
 Licensing
