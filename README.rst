@@ -4,7 +4,7 @@
 A django-po2xls documentation
 ===================================
 
-    *po2xls is a django management command to convert project translation .po filex to .xls*
+    *django-po2xls is a django management command to convert project translation .po filex to .xls*
 
 .. contents::
 
@@ -25,7 +25,7 @@ INSTALLED_APPS = (
 
 Use
 ---
-Just run ``./manage.py po-to-xls`` and .xls files dropped near your project .po files.
+Just run ``po-to-xls`` django management command and .xls files dropped near your project .po files.
 
 Licensing
 ---------
