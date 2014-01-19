@@ -18,20 +18,22 @@ class Command(BaseCommand):
     Convert project translation files to excel.
     """
 
+    _all = u'all'
+
     option_list = BaseCommand.option_list + (
-        make_option('--language', '-l', dest='language', help=u'Language', default=u'all'),
+        make_option('--language', '-l', dest='language', help=u'Language', default=_all),
         make_option('--quiet', '-q', dest='quiet', help=u'Be quiet', default=False, action="store_true"),
     )
 
-    def handle(self, *args, **options):
+    def handle(self, *args, **kwargs):
 
-        if options['language'] == u"all":
-            for lang in settings.LANGUAGES:
-                self._parse(lang)
+        if kwargs['language'] == self._all:
+            for language in dict(settings.LANGUAGES).keys():
+                self._parse(language)
         else:
-            self._parse(options['language'])
+            self._parse(kwargs['language'])
 
-    def _parse(self, lang):
+    def _parse(self, language, *args, **kwargs):
 
-        for f in find_pos(lang[0]):
-            PoToXls(f).parse()
+        for f in find_pos(language):
+            PoToXls(f, **kwargs).parse()
