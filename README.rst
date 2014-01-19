@@ -8,6 +8,10 @@ A django-po2xls documentation
 
 .. contents::
 
+Warning
+-------
+django-po2xls does not support plural.
+
 Installation
 ------------
 * Obtain your copy of source code from git repository: ``git clone https://github.com/vint21h/django-po2xls.git``. Or download latest release from https://github.com/vint21h/django-po2xls/tags.
