@@ -3,4 +3,4 @@
 # po2xls
 # management/commands/__init__.py
 
-__all__ = ['po2xls', ]
+__all__ = ['po-to-xls', ]

@@ -17,6 +17,11 @@ class PoToXls(object):
 
     logger = logging.getLogger(__name__)
 
+    headers = {
+        'strings': [u'msgid', u'msgstr', ],
+        'metadata': [u'key', u'value', ],
+    }
+
     def __init__(self, src, *args, **kwargs):
 
         self.quiet = kwargs.pop('quiet', False)
@@ -32,18 +37,15 @@ class PoToXls(object):
         self.output = self._get_output_path()
         self.po = polib.pofile(self.src)
         self.result = xlwt.Workbook(encoding='utf-8')
-        self.sheet = self.result.add_sheet(u'.po')
-        self._write_header()
-        self.n_row = 1
 
-    def _write_header(self):
+    def _write_header(self, sheet, sheet_name):
         """
-        Create header of xls file.
+        Write sheet header.
         """
 
-        row0 = self.sheet.row(0)
-        row0.write(0, u'msgid')
-        row0.write(1, u'msgstr')
+        header = sheet.row(0)
+        for i, column in enumerate(self.headers[sheet_name]):
+            header.write(i, self.headers[sheet_name][i])
 
     def _get_output_path(self):
         """
@@ -55,17 +57,47 @@ class PoToXls(object):
 
         return os.path.join(path, u"%s.xls" % src)
 
+    def _write_strings(self):
+        """
+        Write strings sheet.
+        """
+
+        sheet = self.result.add_sheet(u'strings')
+        self._write_header(sheet, 'strings')
+
+        n_row = 1
+
+        for entry in self.po:
+            new_row = sheet.row(n_row)
+            new_row.write(0, entry.msgid)
+            new_row.write(1, entry.msgstr)
+            n_row += 1
+            sheet.flush_row_data()
+
+    def _write_metadata(self):
+        """
+        Write metadata sheet.
+        """
+
+        sheet = self.result.add_sheet(u'metadata')
+        self._write_header(sheet, 'metadata')
+
+        n_row = 1
+
+        for k in self.po.metadata:
+            new_row = sheet.row(n_row)
+            new_row.write(0, k)
+            new_row.write(1, self.po.metadata[k])
+            n_row += 1
+            sheet.flush_row_data()
+
     def parse(self, *args, **kwargs):
         """
         Yes it is, thanks captain.
         """
 
-        for entry in self.po:
-            new_row = self.sheet.row(self.n_row)
-            new_row.write(0, entry.msgid)
-            new_row.write(1, entry.msgstr)
-            self.n_row += 1
-            self.sheet.flush_row_data()
+        self._write_strings()
+        self._write_metadata()
 
         # save file
         self.result.save(self.output)
