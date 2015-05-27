@@ -1,20 +1,21 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-# po2xls
+# django-po2xls
 # setup.py
 
+from __future__ import unicode_literals
 from setuptools import setup, find_packages
 
 # metadata
-VERSION = (0, 1, 1)
-__version__ = '.'.join(map(str, VERSION))
+VERSION = (0, 2, 0)
+__version__ = ".".join(map(str, VERSION))
 
 setup(
     name="django-po2xls",
     version=__version__,
     packages=find_packages(),
-    install_requires=['django-rosetta==0.6.8', 'polib==1.0.3', 'xlwt==0.7.4', ],
+    install_requires=["django-rosetta==0.7.6", "polib==1.0.6", "xlwt==1.0.0", ],
     author="Alexei Andrushievich",
     author_email="vint21h@vint21h.pp.ua",
     description="Convert gettext .po files to .xls",
@@ -31,5 +32,9 @@ setup(
         "Programming Language :: Python :: 2.6",
         "Programming Language :: Python :: 2.7",
         "Topic :: Utilities",
+        "Framework :: Django :: 1.5",
+        "Framework :: Django :: 1.6",
+        "Framework :: Django :: 1.7",
+        "Framework :: Django :: 1.8",
     ]
 )

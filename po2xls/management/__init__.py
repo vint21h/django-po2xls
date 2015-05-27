@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# po2xls
-# management/__init__.py
+# django-po2xls
+# po2xls/management/__init__.py
 
-__all__ = ['commands', ]
+from __future__ import unicode_literals
+
+__all__ = ["commands", ]

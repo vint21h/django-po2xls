@@ -1,4 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# po2xls
-# models.py
+# django-po2xls
+# po2xls/models.py
+
+from __future__ import unicode_literals
+
+__all__ = []
