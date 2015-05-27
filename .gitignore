@@ -1,3 +1,6 @@
+# django-po2xls
+# .gitignore
+
 .*.swp
 *.pyc
 *.log

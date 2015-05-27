@@ -1,2 +1,6 @@
+# django-po2xls
+# MANIFEST.in
+
 include README.rst
 include COPYING
+include AUTHORS

@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 
-# po2xls
-# __init__.py
+# django-po2xls
+# po2xls/__init__.py
 
+from __future__ import unicode_literals
 import sys
 import os
 import logging
@@ -10,33 +11,40 @@ import logging
 import polib
 import xlwt
 
-__all__ = ['management', 'models', 'views', 'PoToXls', ]
+__all__ = [
+    "management",
+    "models",
+    "PoToXls",
+    "apps",
+    "default_app_config",
+]
 
+default_app_config = "po2xls.apps.PoToXlsConfig"
 
 class PoToXls(object):
 
     logger = logging.getLogger(__name__)
 
     headers = {
-        'strings': [u'msgid', u'msgstr', ],
-        'metadata': [u'key', u'value', ],
+        "strings": ["msgid", "msgstr", ],
+        "metadata": ["key", "value", ],
     }
 
     def __init__(self, src, *args, **kwargs):
 
-        self.quiet = kwargs.pop('quiet', False)
+        self.quiet = kwargs.pop("quiet", False)
 
         if os.path.exists(src):
             self.src = src
         else:
             if not self.quiet:
-                sys.stderr.write(u"ERROR: File '%s' does not exists.")
-            self.logger.error(u"ERROR: File '%s' does not exists.")
+                sys.stderr.write("ERROR: File '{src}' does not exists.".format(src=src))
+            self.logger.error("ERROR: File '{src}' does not exists.".format(src=src))
             sys.exit(-1)
 
         self.output = self._get_output_path()
         self.po = polib.pofile(self.src)
-        self.result = xlwt.Workbook(encoding='utf-8')
+        self.result = xlwt.Workbook(encoding="utf-8")
 
     def _write_header(self, sheet, sheet_name):
         """
@@ -55,15 +63,15 @@ class PoToXls(object):
         path, src = os.path.split(self.src)
         src, ext = os.path.splitext(src)
 
-        return os.path.join(path, u"%s.xls" % src)
+        return os.path.join(path, "{src}.xls".format(src=src))
 
     def _write_strings(self):
         """
         Write strings sheet.
         """
 
-        sheet = self.result.add_sheet(u'strings')
-        self._write_header(sheet, 'strings')
+        sheet = self.result.add_sheet("strings")
+        self._write_header(sheet, "strings")
 
         n_row = 1
 
@@ -79,8 +87,8 @@ class PoToXls(object):
         Write metadata sheet.
         """
 
-        sheet = self.result.add_sheet(u'metadata')
-        self._write_header(sheet, 'metadata')
+        sheet = self.result.add_sheet("metadata")
+        self._write_header(sheet, "metadata")
 
         n_row = 1
 

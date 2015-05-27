@@ -1,8 +1,8 @@
-.. po2xls
+.. django-po2xls
 .. README.rst
 
 A django-po2xls documentation
-===================================
+=============================
 
     *django-po2xls is a django management command to convert project translation .po files to .xls*
 
@@ -19,12 +19,12 @@ Installation
 
 Configuration
 -------------
-Add ``'po2xls'`` to ``settings.INSTALLED_APPS``.
+Add ``"po2xls"`` to ``settings.INSTALLED_APPS``.
 
     INSTALLED_APPS = (
         ...,
 
-        'po2xls',
+        "po2xls",
 
         ...,
 
@@ -44,3 +44,5 @@ Contacts
 **Project Website**: https://github.com/vint21h/django-po2xls
 
 **Author**: Alexei Andrushievich <vint21h@vint21h.pp.ua>
+
+For other authors list see AUTHORS file.
