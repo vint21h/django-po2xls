@@ -5,4 +5,5 @@
 
 from __future__ import unicode_literals
 
-__all__ = ["commands", ]
+
+__all__ = []
