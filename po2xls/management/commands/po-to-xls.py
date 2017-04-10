@@ -18,18 +18,18 @@ class Command(BaseCommand):
     Convert project translation files to excel.
     """
 
-    all = "all"
+    ALL = "all"
 
     def add_arguments(self, parser):
 
-        parser.add_argument("--language", "-l", dest="language", help="Language", default=all)
+        parser.add_argument("--language", "-l", dest="language", help="Language", default=self.ALL)
         parser.add_argument("--quiet", "-q", dest="quiet", help="Be quiet", default=False, action="store_true")
 
     def handle(self, *args, **kwargs):
 
         language = kwargs.pop("language")
 
-        if all([language == self.all, settings.LANGUAGES, ]):
+        if all([language == self.ALL, settings.LANGUAGES, ]):
             for language in list(dict(settings.LANGUAGES).keys()):
                 self.convert(language=language, **kwargs)
         else:
