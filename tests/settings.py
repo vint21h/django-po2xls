@@ -7,7 +7,7 @@
 import pathlib
 import random
 import sys
-from typing import Dict, List, Union  # pylint: disable=W0611
+from typing import Dict, List, Tuple, Union, Iterable  # pylint: disable=W0611
 
 
 # black magic to use imports from library code
@@ -39,6 +39,11 @@ TEMPLATES = [
     }
 ]  # type: List[Dict[str, Union[str, List[str], bool, Dict[str, str]]]]
 
+
+# i18n settings
+LANGUAGE_CODE = "en"  # type: str
+LANGUAGES = [("en", "English"), ("uk", "Українська")]  # type: Iterable[Tuple[str, str]]
+DEFAULT_LANGUAGE = "en"  # type: str
 
 # add testing related apps
 INSTALLED_APPS = [

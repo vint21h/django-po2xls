@@ -4,84 +4,94 @@
 # po2xls/utils.py
 
 
-import logging
-import os
-import sys
+import pathlib
+from typing import Any, Dict, List  # pylint: disable=W0611
 
 import polib
 import xlwt
 
+from po2xls.exceptions import ConversionError
+
 
 __all__ = [
     "PoToXls",
-]
+]  # type: List[str]
 
 
 class PoToXls:
+    """
+    .po to .xls converter.
+    """
 
-    logger = logging.getLogger(__name__)
-
-    headers = {
+    HEADERS = {
         "strings": ["msgid", "msgstr"],
         "metadata": ["key", "value"],
     }
 
-    def __init__(self, src, *args, **kwargs):
+    def __init__(self, src: str, *args: List[Any], **kwargs: Dict[str, Any]) -> None:
         """
-        Init conversion.
-        Args:
-            src: (unicode or string) path to ".po" file.
-        """
-        self.quiet = kwargs.pop("quiet", False)
+        Setup conversion.
 
-        if os.path.exists(src):
-            self.src = src
-        else:
-            if not self.quiet:
-                sys.stderr.write(
-                    "ERROR: File '{src}' does not exists.".format(**{"src": src})
-                )
-            self.logger.error(
-                "ERROR: File '{src}' does not exists.".format(**{"src": src})
-            )
-            sys.exit(-1)
+        :param src: path to ".po" file.
+        :type src: str.
+        :param args: additional args.
+        :type args: List[Any].
+        :param kwargs: additional args.
+        :type kwargs: Dict[str, Any].
+        :return: nothing.
+        :rtype: None.
+        """
+
+        self.src = pathlib.Path(src)
+
+        if not self.src.exists():
+            raise ConversionError(f"ERROR: File '{src}' does not exists.")
 
         self.po = polib.pofile(self.src)
         self.result = xlwt.Workbook(encoding="utf-8")
 
-    def header(self, sheet, name):
+    def header(self, sheet: xlwt.Worksheet, name: str) -> None:
         """
         Write sheet header.
-        Args:
-            sheet: (xlwt.Worksheet.Worksheet) instance of xlwt sheet.
-            name: (unicode) name of sheet.
+
+        :param sheet: instance of xlwt sheet to write header to.
+        :type sheet: xlwt.Worksheet.
+        :param name: sheet name.
+        :type name: str.
         """
 
         header = sheet.row(0)
-        for i, column in enumerate(self.headers[name]):
-            header.write(i, self.headers[name][i])
 
-    def output(self):
+        for i, column in enumerate(  # pylint: disable=W0612  # noqa: B007  # noqa: E501
+            self.HEADERS[name]
+        ):
+            header.write(i, self.HEADERS[name][i])
+
+    @staticmethod
+    def output(src: pathlib.Path) -> pathlib.Path:
         """
         Create full path for excel file to save parsed translations strings.
-        Returns:
-            unicode: full path for excel file to save parsed translations strings.
+
+        :param src: path to .po file.
+        :type src: pathlib.Path.
+        :return: path to .xls file.
+        :rtype: pathlib.Path.
         """
 
-        path, src = os.path.split(self.src)
-        src, ext = os.path.splitext(src)
+        return src.parent.joinpath(f"{src.stem}.xls")
 
-        return os.path.join(path, "{src}.xls".format(**{"src": src}))
-
-    def strings(self):
+    def strings(self) -> None:
         """
         Write strings sheet.
+
+        :return: nothing.
+        :rtype: None.
         """
 
         sheet = self.result.add_sheet("strings")
         self.header(sheet, "strings")
 
-        n_row = 1  # row number
+        n_row = 1  # row number (first after header)
 
         for entry in self.po:
             row = sheet.row(n_row)
@@ -90,30 +100,38 @@ class PoToXls:
             n_row += 1
             sheet.flush_row_data()
 
-    def metadata(self):
+    def metadata(self) -> None:
         """
         Write metadata sheet.
+
+        :return: nothing.
+        :rtype: None.
         """
 
         sheet = self.result.add_sheet("metadata")
         self.header(sheet, "metadata")
 
-        n_row = 1  # row number
+        n_row = 1  # row number (first after header)
 
-        for k in self.po.metadata:
+        for data in self.po.metadata:
             row = sheet.row(n_row)
-            row.write(0, k)
-            row.write(1, self.po.metadata[k])
+            row.write(0, data)
+            row.write(1, self.po.metadata[data])
             n_row += 1
             sheet.flush_row_data()
 
-    def convert(self, *args, **kwargs):
+    def convert(self, *args: List[Any], **kwargs: Dict[str, Any]) -> None:
         """
         Yes it is, thanks captain.
+
+        :param args: additional args.
+        :type args: List[Any].
+        :param kwargs: additional args.
+        :type kwargs: Dict[str, Any].
+        :return: nothing.
+        :rtype: None.
         """
 
         self.strings()
         self.metadata()
-
-        # save file
-        self.result.save(self.output())
+        self.result.save(self.output(src=self.src))
