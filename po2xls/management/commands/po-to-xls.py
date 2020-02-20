@@ -40,7 +40,14 @@ class Command(BaseCommand):
         """
 
         parser.add_argument(
-            "--language", "-l", dest="language", help=_("Language"), default=self.ALL
+            "--locale",
+            "-l",
+            dest="locale",
+            help=_("Locale to convert"),
+            default=self.ALL,
+            required=True,
+            metavar="LOCALE",
+            type=str,
         )
         parser.add_argument(
             "--quiet",
@@ -63,22 +70,20 @@ class Command(BaseCommand):
         :rtype: None.
         """
 
-        language = kwargs.get("language", settings.DEFAULT_LANGUAGE)
+        locale = kwargs.get("locale", settings.DEFAULT_LANGUAGE)
 
-        if all([language == self.ALL, settings.LANGUAGES]):
+        if all([locale == self.ALL, settings.LANGUAGES]):
             for language in dict(settings.LANGUAGES):
-                self.convert(language=language, **kwargs)
-        elif all([settings.LANGUAGES, language in dict(settings.LANGUAGES)]):
-            self.convert(language=language, **kwargs)  # type: ignore
+                self.convert(locale=language, **kwargs)
+        elif all([settings.LANGUAGES, locale in dict(settings.LANGUAGES)]):
+            self.convert(locale=locale, **kwargs)  # type: ignore
 
-    def convert(
-        self, language: str, *args: List[Any], **kwargs: Dict[str, Any]
-    ) -> None:
+    def convert(self, locale: str, *args: List[Any], **kwargs: Dict[str, Any]) -> None:
         """
         Run converter.
 
-        :param language: language to process.
-        :type language: str
+        :param locale: locale to process.
+        :type locale: str
         :param args: additional args.
         :type args: List[Any].
         :param kwargs: additional args.
@@ -89,7 +94,7 @@ class Command(BaseCommand):
 
         quiet = kwargs.get("quiet", False)
 
-        for po in find_pos(lang=language):
+        for po in find_pos(lang=locale):
             try:
                 PoToXls(src=po, **kwargs).convert()
             except ConversionError as error:

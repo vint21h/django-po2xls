@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: django-po2xls 0.4.0\n"
 "Report-Msgid-Bugs-To: Alexei Andrushievich <vint21h@vint21h.pp.ua>\n"
-"POT-Creation-Date: 2020-02-20 14:47+0200\n"
+"POT-Creation-Date: 2020-02-20 16:04+0200\n"
 "PO-Revision-Date: 2020-02-20 14:44+0200\n"
 "Last-Translator: Alexei Andrushievich <vint21h@vint21h.pp.ua>\n"
 "Language-Team: Alexei Andrushievich <vint21h@vint21h.pp.ua>\n"
@@ -26,10 +26,10 @@ msgstr "Конвертер .po у .xls"
 msgid "Convert project translation files to Excel format"
 msgstr "Конверувати файли перекладу проекта у формат Excel"
 
-#: po2xls/management/commands/po-to-xls.py:43
-msgid "Language"
-msgstr "Мова"
+#: po2xls/management/commands/po-to-xls.py:46
+msgid "Locale to convert"
+msgstr "Локаль конвертації"
 
-#: po2xls/management/commands/po-to-xls.py:49
+#: po2xls/management/commands/po-to-xls.py:56
 msgid "Be quiet"
 msgstr "Be quiet"
