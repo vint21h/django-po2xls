@@ -4,9 +4,10 @@
 # po2xls/utils.py
 
 from __future__ import unicode_literals
-import sys
-import os
+
 import logging
+import os
+import sys
 
 import polib
 import xlwt
@@ -22,14 +23,8 @@ class PoToXls(object):
     logger = logging.getLogger(__name__)
 
     headers = {
-        "strings": [
-            "msgid",
-            "msgstr",
-        ],
-        "metadata": [
-            "key",
-            "value",
-        ],
+        "strings": ["msgid", "msgstr"],
+        "metadata": ["key", "value"],
     }
 
     def __init__(self, src, *args, **kwargs):
@@ -44,8 +39,12 @@ class PoToXls(object):
             self.src = src
         else:
             if not self.quiet:
-                sys.stderr.write("ERROR: File '{src}' does not exists.".format(**{"src": src, }))
-            self.logger.error("ERROR: File '{src}' does not exists.".format(**{"src": src, }))
+                sys.stderr.write(
+                    "ERROR: File '{src}' does not exists.".format(**{"src": src,})
+                )
+            self.logger.error(
+                "ERROR: File '{src}' does not exists.".format(**{"src": src,})
+            )
             sys.exit(-1)
 
         self.po = polib.pofile(self.src)
@@ -73,7 +72,7 @@ class PoToXls(object):
         path, src = os.path.split(self.src)
         src, ext = os.path.splitext(src)
 
-        return os.path.join(path, "{src}.xls".format(**{"src": src, }))
+        return os.path.join(path, "{src}.xls".format(**{"src": src}))
 
     def strings(self):
         """
