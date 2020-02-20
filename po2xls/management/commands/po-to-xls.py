@@ -26,7 +26,7 @@ class Command(BaseCommand):
     """
 
     ALL = "all"
-    help = str(_("Convert project translation files to excel format"))
+    help = str(_("Convert project translation files to Excel format"))
     logger = logging.getLogger(__name__)
 
     def add_arguments(self, parser: CommandParser) -> None:
