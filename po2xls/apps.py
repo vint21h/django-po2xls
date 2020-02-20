@@ -1,19 +1,22 @@
 # -*- coding: utf-8 -*-
 
 # django-po2xls
-# po2xls/apps.py
+# djversion/apps.py
 
-from __future__ import unicode_literals
+
+from typing import List  # pylint: disable=W0611
 
 from django.apps import AppConfig
+from django.utils.translation import ugettext_lazy as _
 
 
-__all__ = [
-    "Config",
-]
+__all__ = ["DjangoPoToXlsConfig"]  # type: List[str]
 
 
-class Config(AppConfig):
+class DjangoPoToXlsConfig(AppConfig):
+    """
+    Application config.
+    """
 
-    name = "po2xls"
-    verbose_name = ".po to .xls"
+    name = "po2xls"  # type: str
+    verbose_name = _("Convert .po to .xls")  # type: str

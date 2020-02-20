@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 
 # django-po2xls
-# po2xls/management/__init__.py
-
-from __future__ import unicode_literals
+# djversion/management/__init__.py
 
 
-__all__ = []
+from typing import List  # pylint: disable=W0611
+
+
+__all__ = []  # type: List[str]
