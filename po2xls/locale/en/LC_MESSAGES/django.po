@@ -1,0 +1,33 @@
+# django-po2xls
+# po2xls/locale/en/LC_MESSAGES/django.po
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: django-po2xls 0.4.0\n"
+"Report-Msgid-Bugs-To: Alexei Andrushievich <vint21h@vint21h.pp.ua>\n"
+"POT-Creation-Date: 2020-02-20 14:47+0200\n"
+"PO-Revision-Date: 2020-02-20 14:44+0200\n"
+"Last-Translator: Alexei Andrushievich <vint21h@vint21h.pp.ua>\n"
+"Language-Team: Alexei Andrushievich <vint21h@vint21h.pp.ua>\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+
+#: po2xls/apps.py:22
+msgid "Convert .po to .xls"
+msgstr "Convert .po to .xls"
+
+#: po2xls/management/commands/po-to-xls.py:29
+msgid "Convert project translation files to Excel format"
+msgstr "Convert project translation files to Excel format"
+
+#: po2xls/management/commands/po-to-xls.py:43
+msgid "Language"
+msgstr "Language"
+
+#: po2xls/management/commands/po-to-xls.py:49
+msgid "Be quiet"
+msgstr "Be quiet"
