@@ -3,7 +3,6 @@
 # django-po2xls
 # po2xls/utils.py
 
-from __future__ import unicode_literals
 
 import logging
 import os
@@ -18,7 +17,7 @@ __all__ = [
 ]
 
 
-class PoToXls(object):
+class PoToXls:
 
     logger = logging.getLogger(__name__)
 
@@ -40,10 +39,10 @@ class PoToXls(object):
         else:
             if not self.quiet:
                 sys.stderr.write(
-                    "ERROR: File '{src}' does not exists.".format(**{"src": src,})
+                    "ERROR: File '{src}' does not exists.".format(**{"src": src})
                 )
             self.logger.error(
-                "ERROR: File '{src}' does not exists.".format(**{"src": src,})
+                "ERROR: File '{src}' does not exists.".format(**{"src": src})
             )
             sys.exit(-1)
 
