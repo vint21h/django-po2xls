@@ -42,13 +42,13 @@ class PoToXls:
         :rtype: None.
         """
 
-        self.src = pathlib.Path(src)
+        self.src = pathlib.Path(src)  # type: pathlib.Path
 
         if not self.src.exists():
             raise ConversionError(f"ERROR: File '{src}' does not exists.")
 
-        self.po = polib.pofile(self.src)
-        self.result = xlwt.Workbook(encoding="utf-8")
+        self.po = polib.pofile(self.src)  # type: polib.POFile
+        self.result = xlwt.Workbook(encoding="utf-8")  # type: xlwt.Workbook
 
     def header(self, sheet: xlwt.Worksheet, name: str) -> None:
         """
@@ -60,7 +60,7 @@ class PoToXls:
         :type name: str.
         """
 
-        header = sheet.row(0)
+        header = sheet.row(0)  # type: xlwt.Row
 
         for i, column in enumerate(  # pylint: disable=W0612  # noqa: B007  # noqa: E501
             self.HEADERS[name]
@@ -88,13 +88,13 @@ class PoToXls:
         :rtype: None.
         """
 
-        sheet = self.result.add_sheet("strings")
+        sheet = self.result.add_sheet("strings")  # type: xlwt.Worksheet
         self.header(sheet, "strings")
 
-        n_row = 1  # row number (first after header)
+        n_row = 1  # type: int  # row number (first after header)
 
         for entry in self.po:
-            row = sheet.row(n_row)
+            row = sheet.row(n_row)  # type: xlwt.Row
             row.write(0, entry.msgid)
             row.write(1, entry.msgstr)
             n_row += 1
@@ -108,13 +108,13 @@ class PoToXls:
         :rtype: None.
         """
 
-        sheet = self.result.add_sheet("metadata")
+        sheet = self.result.add_sheet("metadata")  # type: xlwt.Worksheet
         self.header(sheet, "metadata")
 
-        n_row = 1  # row number (first after header)
+        n_row = 1  # type: int  # row number (first after header)
 
         for data in self.po.metadata:
-            row = sheet.row(n_row)
+            row = sheet.row(n_row)  # type: xlwt.Row
             row.write(0, data)
             row.write(1, self.po.metadata[data])
             n_row += 1
