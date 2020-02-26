@@ -47,7 +47,11 @@ class PoToXls:
         if not self.src.exists():
             raise ConversionError(f"ERROR: File '{src}' does not exists.")
 
-        self.po = polib.pofile(self.src)  # type: polib.POFile
+        try:
+            self.po = polib.pofile(self.src)  # type: polib.POFile
+        except (ValueError, IOError) as error:
+            raise ConversionError(f"ERROR: '{src}' - file problem: {error}")
+
         self.result = xlwt.Workbook(encoding="utf-8")  # type: xlwt.Workbook
 
     def header(self, sheet: xlwt.Worksheet, name: str) -> None:
@@ -66,6 +70,8 @@ class PoToXls:
             self.HEADERS[name]
         ):
             header.write(i, self.HEADERS[name][i])
+
+        sheet.flush_row_data()
 
     @staticmethod
     def output(src: pathlib.Path) -> pathlib.Path:
