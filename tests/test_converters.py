@@ -64,3 +64,5 @@ class PoToXlsTest(TestCase):
         self.assertTrue(
             expr=pathlib.Path("po2xls/locale/uk/LC_MESSAGES/django.xls").exists()
         )
+
+    # TODO: add file content test.
