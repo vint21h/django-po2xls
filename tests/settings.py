@@ -44,6 +44,7 @@ TEMPLATES = [
 LANGUAGE_CODE = "en"  # type: str
 LANGUAGES = [("en", "English"), ("uk", "Українська")]  # type: Iterable[Tuple[str, str]]
 DEFAULT_LANGUAGE = "en"  # type: str
+LOCALE_PATHS = ["po2xls/locale"]  # type: List[str]
 
 # add testing related apps
 INSTALLED_APPS = [
