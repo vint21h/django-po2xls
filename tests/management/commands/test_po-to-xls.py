@@ -30,6 +30,7 @@ class CommandTest(TestCase):
         """
 
         os.remove("po2xls/locale/uk/LC_MESSAGES/django.xls")
+        os.remove("po2xls/locale/en/LC_MESSAGES/django.xls")
 
         super().tearDownClass()
 
@@ -42,4 +43,15 @@ class CommandTest(TestCase):
 
         self.assertTrue(
             expr=pathlib.Path("po2xls/locale/uk/LC_MESSAGES/django.xls").exists()
+        )
+
+    def test_convert__all(self):
+        """
+        convert method must write converted data to .xls files for all locales.
+        """
+
+        Command().handle()
+
+        self.assertTrue(
+            expr=pathlib.Path("po2xls/locale/en/LC_MESSAGES/django.xls").exists()
         )
