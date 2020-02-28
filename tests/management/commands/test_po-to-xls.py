@@ -12,6 +12,8 @@ from typing import List  # pylint: disable=W0611
 from django.test import TestCase
 
 
+# po-to-xls management command imported on the fly
+# because we can't import something from the module that contains "-"
 Command = import_module("po2xls.management.commands.po-to-xls").Command  # type: ignore
 
 
@@ -54,4 +56,7 @@ class CommandTest(TestCase):
 
         self.assertTrue(
             expr=pathlib.Path("po2xls/locale/en/LC_MESSAGES/django.xls").exists()
+        )
+        self.assertTrue(
+            expr=pathlib.Path("po2xls/locale/uk/LC_MESSAGES/django.xls").exists()
         )

@@ -41,6 +41,7 @@ tox = "==3.14.5"
 tox-pyenv = "==1.1.0"
 tox-travis = "==0.12"
 twine = "==3.1.1"
+xlrd = "==1.2.0"
 
 
 [packages]
