@@ -9,6 +9,8 @@ import pathlib
 from typing import List  # pylint: disable=W0611
 
 from django.test import TestCase
+import polib
+import xlrd
 
 from po2xls.converters import PoToXls
 from po2xls.exceptions import ConversionError
@@ -37,7 +39,7 @@ class PoToXlsTest(TestCase):
         __init__ method must raise "ConversionError".
         """
 
-        with self.assertRaises(ConversionError):
+        with self.assertRaises(expected_exception=ConversionError):
             PoToXls(src="locale/uk/LC_MESSAGES/django.po")
 
     def test_output(self):
@@ -65,4 +67,33 @@ class PoToXlsTest(TestCase):
             expr=pathlib.Path("po2xls/locale/uk/LC_MESSAGES/django.xls").exists()
         )
 
-    # TODO: add file content test.
+    def test_convert(self):
+        """
+        convert method must write converted data to .xls file.
+        """
+
+        PoToXls(src="po2xls/locale/uk/LC_MESSAGES/django.po").convert()
+
+        po = polib.pofile(
+            "po2xls/locale/uk/LC_MESSAGES/django.po"
+        )  # type: polib.POFile
+        po_metadata = [["key", "value"]] + [
+            [data, po.metadata[data]] for data in po.metadata
+        ]  # type: List[List[str]]
+        po_strings = [["msgid", "msgstr"]] + [
+            [entry.msgid, entry.msgstr] for entry in po
+        ]  # type: List[List[str]]
+        xls = xlrd.open_workbook(
+            filename="po2xls/locale/uk/LC_MESSAGES/django.xls"
+        )  # type: xlrd.Workbook
+        xls_metadata = [
+            xls.sheet_by_name("metadata").row_values(row_i)
+            for row_i in range(0, xls.sheet_by_name("metadata").nrows)
+        ]  # type: List[List[str]]
+        xls_strings = [
+            xls.sheet_by_name("strings").row_values(row_i)
+            for row_i in range(0, xls.sheet_by_name("strings").nrows)
+        ]  # type: List[List[str]]
+
+        self.assertListEqual(list1=xls_metadata, list2=po_metadata)
+        self.assertListEqual(list1=xls_strings, list2=po_strings)

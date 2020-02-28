@@ -24,7 +24,7 @@ msgstr "Конвертер .po у .xls"
 
 #: po2xls/management/commands/po-to-xls.py:29
 msgid "Convert project translation files to Excel format"
-msgstr "Конверувати файли перекладу проекта у формат Excel"
+msgstr "Конвертувати файли перекладу проекта у формат Excel"
 
 #: po2xls/management/commands/po-to-xls.py:46
 msgid "Locale to convert"
