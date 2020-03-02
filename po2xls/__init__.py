@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 # django-po2xls
-# djversion/__init__.py
+# po2xls/__init__.py
 
 
 from typing import List  # pylint: disable=W0611

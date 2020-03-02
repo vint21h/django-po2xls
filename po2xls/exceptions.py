@@ -14,7 +14,7 @@ __all__ = [
 
 class ConversionError(Exception):
     """
-    Problem with while converting exception.
+    Problem while converting exception.
     """
 
     ...
