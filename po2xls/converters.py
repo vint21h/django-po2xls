@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 # django-po2xls
-# po2xls/utils.py
+# po2xls/converters.py
 
 
 import pathlib
@@ -27,6 +27,8 @@ class PoToXls:
         "strings": ["msgid", "msgstr"],
         "metadata": ["key", "value"],
     }
+    METADATA_SHEET_NAME = "metadata"
+    STRINGS_SHEET_NAME = "strings"
 
     def __init__(self, src: str, *args: List[Any], **kwargs: Dict[str, Any]) -> None:
         """
@@ -94,8 +96,8 @@ class PoToXls:
         :rtype: None.
         """
 
-        sheet = self.result.add_sheet("strings")  # type: xlwt.Worksheet
-        self.header(sheet, "strings")
+        sheet = self.result.add_sheet(self.STRINGS_SHEET_NAME)  # type: xlwt.Worksheet
+        self.header(sheet=sheet, name=self.STRINGS_SHEET_NAME)
 
         n_row = 1  # type: int  # row number (first after header)
 
@@ -114,8 +116,8 @@ class PoToXls:
         :rtype: None.
         """
 
-        sheet = self.result.add_sheet("metadata")  # type: xlwt.Worksheet
-        self.header(sheet, "metadata")
+        sheet = self.result.add_sheet(self.METADATA_SHEET_NAME)  # type: xlwt.Worksheet
+        self.header(sheet=sheet, name=self.METADATA_SHEET_NAME)
 
         n_row = 1  # type: int  # row number (first after header)
 

@@ -87,12 +87,12 @@ class PoToXlsTest(TestCase):
             filename="po2xls/locale/uk/LC_MESSAGES/django.xls"
         )  # type: xlrd.Workbook
         xls_metadata = [
-            xls.sheet_by_name("metadata").row_values(row_i)
-            for row_i in range(0, xls.sheet_by_name("metadata").nrows)
+            xls.sheet_by_name(PoToXls.METADATA_SHEET_NAME).row_values(row_i)
+            for row_i in range(0, xls.sheet_by_name(PoToXls.METADATA_SHEET_NAME).nrows)
         ]  # type: List[List[str]]
         xls_strings = [
-            xls.sheet_by_name("strings").row_values(row_i)
-            for row_i in range(0, xls.sheet_by_name("strings").nrows)
+            xls.sheet_by_name(PoToXls.STRINGS_SHEET_NAME).row_values(row_i)
+            for row_i in range(0, xls.sheet_by_name(PoToXls.STRINGS_SHEET_NAME).nrows)
         ]  # type: List[List[str]]
 
         self.assertListEqual(list1=xls_metadata, list2=po_metadata)
