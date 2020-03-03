@@ -50,7 +50,7 @@ class PoToXls:
             raise ConversionError(f"ERROR: File '{src}' does not exists.")
 
         try:
-            self.po = polib.pofile(self.src)  # type: polib.POFile
+            self.po = polib.pofile(pofile=self.src)  # type: polib.POFile
         except (ValueError, IOError) as error:
             raise ConversionError(f"ERROR: '{src}' - file problem: {error}")
 
@@ -99,13 +99,13 @@ class PoToXls:
         sheet = self.result.add_sheet(self.STRINGS_SHEET_NAME)  # type: xlwt.Worksheet
         self.header(sheet=sheet, name=self.STRINGS_SHEET_NAME)
 
-        n_row = 1  # type: int  # row number (first after header)
+        row_i = 1  # type: int  # row number (first after header)
 
         for entry in self.po:
-            row = sheet.row(n_row)  # type: xlwt.Row
+            row = sheet.row(indx=row_i)  # type: xlwt.Row
             row.write(0, entry.msgid)
             row.write(1, entry.msgstr)
-            n_row += 1
+            row_i += 1
             sheet.flush_row_data()
 
     def metadata(self) -> None:
@@ -116,16 +116,18 @@ class PoToXls:
         :rtype: None.
         """
 
-        sheet = self.result.add_sheet(self.METADATA_SHEET_NAME)  # type: xlwt.Worksheet
+        sheet = self.result.add_sheet(
+            sheetname=self.METADATA_SHEET_NAME
+        )  # type: xlwt.Worksheet
         self.header(sheet=sheet, name=self.METADATA_SHEET_NAME)
 
-        n_row = 1  # type: int  # row number (first after header)
+        row_i = 1  # type: int  # row number (first after header)
 
         for data in self.po.metadata:
-            row = sheet.row(n_row)  # type: xlwt.Row
+            row = sheet.row(indx=row_i)  # type: xlwt.Row
             row.write(0, data)
             row.write(1, self.po.metadata[data])
-            n_row += 1
+            row_i += 1
             sheet.flush_row_data()
 
     def convert(self, *args: List[Any], **kwargs: Dict[str, Any]) -> None:
@@ -142,4 +144,4 @@ class PoToXls:
 
         self.strings()
         self.metadata()
-        self.result.save(self.output(src=self.src))
+        self.result.save(filename_or_stream=self.output(src=self.src))

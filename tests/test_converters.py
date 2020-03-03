@@ -75,7 +75,7 @@ class PoToXlsTest(TestCase):
         PoToXls(src="po2xls/locale/uk/LC_MESSAGES/django.po").convert()
 
         po = polib.pofile(
-            "po2xls/locale/uk/LC_MESSAGES/django.po"
+            pofile="po2xls/locale/uk/LC_MESSAGES/django.po"
         )  # type: polib.POFile
         po_metadata = [["key", "value"]] + [
             [data, po.metadata[data]] for data in po.metadata
@@ -87,12 +87,20 @@ class PoToXlsTest(TestCase):
             filename="po2xls/locale/uk/LC_MESSAGES/django.xls"
         )  # type: xlrd.Workbook
         xls_metadata = [
-            xls.sheet_by_name(PoToXls.METADATA_SHEET_NAME).row_values(row_i)
-            for row_i in range(0, xls.sheet_by_name(PoToXls.METADATA_SHEET_NAME).nrows)
+            xls.sheet_by_name(sheet_name=PoToXls.METADATA_SHEET_NAME).row_values(
+                rowx=row_i
+            )
+            for row_i in range(
+                0, xls.sheet_by_name(sheet_name=PoToXls.METADATA_SHEET_NAME).nrows
+            )
         ]  # type: List[List[str]]
         xls_strings = [
-            xls.sheet_by_name(PoToXls.STRINGS_SHEET_NAME).row_values(row_i)
-            for row_i in range(0, xls.sheet_by_name(PoToXls.STRINGS_SHEET_NAME).nrows)
+            xls.sheet_by_name(sheet_name=PoToXls.STRINGS_SHEET_NAME).row_values(
+                rowx=row_i
+            )
+            for row_i in range(
+                0, xls.sheet_by_name(sheet_name=PoToXls.STRINGS_SHEET_NAME).nrows
+            )
         ]  # type: List[List[str]]
 
         self.assertListEqual(list1=xls_metadata, list2=po_metadata)
