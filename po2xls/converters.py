@@ -4,7 +4,7 @@
 # po2xls/converters.py
 
 
-import pathlib
+from pathlib import Path
 from typing import Any, Dict, List  # pylint: disable=W0611
 
 import xlwt
@@ -34,17 +34,16 @@ class PoToXls:
         """
         Setup conversion.
 
-        :param src: path to ".po" file.
-        :type src: str.
-        :param args: additional args.
-        :type args: List[Any].
-        :param kwargs: additional args.
-        :type kwargs: Dict[str, Any].
-        :return: nothing.
-        :rtype: None.
+        :param src: path to ".po" file
+        :type src: str
+        :param args: additional args
+        :type args: List[Any]
+        :param kwargs: additional args
+        :type kwargs: Dict[str, Any]
+        :raises ConversionError: raised when file does not exists, IO errors or file format problems  # noqa: E501
         """
 
-        self.src = pathlib.Path(src)  # type: pathlib.Path
+        self.src = Path(src)  # type: Path
 
         if not self.src.exists():
             raise ConversionError(f"ERROR: File '{src}' does not exists.")
@@ -60,10 +59,10 @@ class PoToXls:
         """
         Write sheet header.
 
-        :param sheet: instance of xlwt sheet to write header to.
-        :type sheet: xlwt.Worksheet.
-        :param name: sheet name.
-        :type name: str.
+        :param sheet: instance of xlwt sheet to write header to
+        :type sheet: xlwt.Worksheet
+        :param name: sheet name
+        :type name: str
         """
 
         header = sheet.row(0)  # type: xlwt.Row
@@ -76,14 +75,14 @@ class PoToXls:
         sheet.flush_row_data()
 
     @staticmethod
-    def output(src: pathlib.Path) -> pathlib.Path:
+    def output(src: Path) -> Path:
         """
         Create full path for excel file to save parsed translations strings.
 
-        :param src: path to .po file.
-        :type src: pathlib.Path.
-        :return: path to .xls file.
-        :rtype: pathlib.Path.
+        :param src: path to .po file
+        :type src: Path
+        :return: path to .xls file
+        :rtype: Path
         """
 
         return src.parent.joinpath(f"{src.stem}.xls")
@@ -91,9 +90,6 @@ class PoToXls:
     def strings(self) -> None:
         """
         Write strings sheet.
-
-        :return: nothing.
-        :rtype: None.
         """
 
         sheet = self.result.add_sheet(self.STRINGS_SHEET_NAME)  # type: xlwt.Worksheet
@@ -111,9 +107,6 @@ class PoToXls:
     def metadata(self) -> None:
         """
         Write metadata sheet.
-
-        :return: nothing.
-        :rtype: None.
         """
 
         sheet = self.result.add_sheet(
@@ -134,12 +127,10 @@ class PoToXls:
         """
         Yes it is, thanks captain.
 
-        :param args: additional args.
-        :type args: List[Any].
-        :param kwargs: additional args.
-        :type kwargs: Dict[str, Any].
-        :return: nothing.
-        :rtype: None.
+        :param args: additional args
+        :type args: List[Any]
+        :param kwargs: additional args
+        :type kwargs: Dict[str, Any]
         """
 
         self.strings()

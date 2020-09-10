@@ -25,7 +25,7 @@ class PoToXlsTest(TestCase):
     """
 
     @classmethod
-    def tearDownClass(cls):
+    def tearDownClass(cls) -> None:
         """
         Tear down.
         """
@@ -34,7 +34,7 @@ class PoToXlsTest(TestCase):
 
         super().tearDownClass()
 
-    def test___init___raises_conversion_error_exception(self):
+    def test___init___raises_conversion_error_exception(self) -> None:
         """
         __init__ method must raise "ConversionError".
         """
@@ -42,7 +42,7 @@ class PoToXlsTest(TestCase):
         with self.assertRaises(expected_exception=ConversionError):
             PoToXls(src="locale/uk/LC_MESSAGES/django.po")
 
-    def test_output(self):
+    def test_output(self) -> None:
         """
         output method must return original file path but with extension changed to "po".
         """
@@ -56,7 +56,7 @@ class PoToXlsTest(TestCase):
 
         self.assertEqual(first=result, second=expected)
 
-    def test_convert__file_exists(self):
+    def test_convert__file_exists(self) -> None:
         """
         convert method must write converted data to .xls file.
         """
@@ -67,7 +67,7 @@ class PoToXlsTest(TestCase):
             expr=pathlib.Path("po2xls/locale/uk/LC_MESSAGES/django.xls").exists()
         )
 
-    def test_convert(self):
+    def test_convert(self) -> None:
         """
         convert method must write converted data to .xls file.
         """

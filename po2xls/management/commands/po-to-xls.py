@@ -33,10 +33,8 @@ class Command(BaseCommand):
         """
         Add command arguments.
 
-        :param parser: command arguments parser instance.
-        :type parser: django.core.management.base.CommandParser.
-        :return: nothing.
-        :rtype: None.
+        :param parser: command arguments parser instance
+        :type parser: CommandParser
         """
 
         parser.add_argument(
@@ -62,12 +60,10 @@ class Command(BaseCommand):
         """
         Run command.
 
-        :param args: additional args.
-        :type args: List[Any].
-        :param kwargs: additional args.
-        :type kwargs: Dict[str, Any].
-        :return: nothing.
-        :rtype: None.
+        :param args: additional args
+        :type args: List[Any]
+        :param kwargs: additional args
+        :type kwargs: Dict[str, Any]
         """
 
         locale = kwargs.get("locale", self.ALL)
@@ -82,14 +78,12 @@ class Command(BaseCommand):
         """
         Run converter.
 
-        :param locale: locale to process.
+        :param locale: locale to process
         :type locale: str
-        :param args: additional args.
-        :type args: List[Any].
-        :param kwargs: additional args.
-        :type kwargs: Dict[str, Any].
-        :return: nothing.
-        :rtype: None.
+        :param args: additional args
+        :type args: List[Any]
+        :param kwargs: additional args
+        :type kwargs: Dict[str, Any]
         """
 
         quiet = kwargs.get("quiet", False)
