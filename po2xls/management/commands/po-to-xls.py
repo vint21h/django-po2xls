@@ -4,14 +4,14 @@
 # po2xls/management/commands/po2xls.py
 
 
-import logging
 import sys
+import logging
 from typing import Any, Dict, List  # pylint: disable=W0611
 
 from django.conf import settings
-from django.core.management.base import BaseCommand, CommandParser
-from django.utils.translation import ugettext_lazy as _
 from rosetta.poutil import find_pos
+from django.utils.translation import ugettext_lazy as _
+from django.core.management.base import BaseCommand, CommandParser
 
 from po2xls.converters import PoToXls
 from po2xls.exceptions import ConversionError

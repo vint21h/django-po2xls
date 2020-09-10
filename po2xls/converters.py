@@ -7,8 +7,8 @@
 import pathlib
 from typing import Any, Dict, List  # pylint: disable=W0611
 
-import polib
 import xlwt
+import polib
 
 from po2xls.exceptions import ConversionError
 

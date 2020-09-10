@@ -8,9 +8,9 @@ import os
 import pathlib
 from typing import List  # pylint: disable=W0611
 
-from django.test import TestCase
-import polib
 import xlrd
+import polib
+from django.test import TestCase
 
 from po2xls.converters import PoToXls
 from po2xls.exceptions import ConversionError
