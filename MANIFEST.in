@@ -3,8 +3,5 @@
 
 
 prune tests*
-include README.rst
-include COPYING
-include AUTHORS
 recursive-include po2xls *.po
 recursive-include po2xls *.mo
