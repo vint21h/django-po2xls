@@ -2,7 +2,6 @@
 # MANIFEST.in
 
 
-prune .github*
 prune tests*
 recursive-include po2xls *.po
 recursive-include po2xls *.mo
