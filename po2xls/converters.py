@@ -49,7 +49,7 @@ class PoToXls:
             raise ConversionError(f"ERROR: File '{src}' does not exists.")
 
         try:
-            self.po = polib.pofile(pofile=self.src)  # type: polib.POFile
+            self.po = polib.pofile(pofile=str(self.src))  # type: polib.POFile
         except (ValueError, IOError) as error:
             raise ConversionError(f"ERROR: '{src}' - file problem: {error}")
 
