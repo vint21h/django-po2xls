@@ -43,26 +43,8 @@ LANGUAGES = [("en", "English"), ("uk", "Українська")]  # type: Iterabl
 DEFAULT_LANGUAGE = "en"  # type: str
 LOCALE_PATHS = ["po2xls/locale"]  # type: List[str]
 
-# add testing related apps
 INSTALLED_APPS = [
-    "django_nose",
     "po2xls",
-]  # type: List[str]
-
-# add nose test runner
-TEST_RUNNER = "django_nose.NoseTestSuiteRunner"  # type: str
-
-# configure nose test runner
-NOSE_ARGS = [
-    "--rednose",
-    "--force-color",
-    "--with-timer",
-    "--with-doctest",
-    "--with-coverage",
-    "--cover-inclusive",
-    "--cover-erase",
-    "--cover-package=po2xls",
-    "--logging-clear-handlers",
 ]  # type: List[str]
 
 # configure urls
