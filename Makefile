@@ -3,12 +3,12 @@
 
 
 .ONESHELL:
-PHONY: pipenv-install tox test makemessages compilemessages bumpversion build sign check check-build check-upload upload clean coveralls release help
+PHONY: install tox test makemessages compilemessages bumpversion build sign check check-build check-upload upload clean coveralls release help
 TEST_PYPI_URL ?= https://test.pypi.org/legacy/
 NAME ?= po2xls
 EXTENSIONS ?= py,html,txt,xml
-TRASH_DIRS ?= build dist *.egg-info .tox .mypy_cache __pycache__ htmlcov
-TRASH_FILES ?= .coverage Pipfile.lock
+TRASH_DIRS ?= build dist *.egg-info .tox .mypy_cache .pytest_cache __pycache__ htmlcov
+TRASH_FILES ?= .coverage
 BUILD_TYPES ?= bdist_wheel sdist
 VERSION ?= `python -c "import configparser; config = configparser.ConfigParser(); config.read('setup.cfg'); print(config['metadata']['version']);"`
 
