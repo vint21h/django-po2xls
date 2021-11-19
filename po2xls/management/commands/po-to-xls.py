@@ -6,7 +6,7 @@
 
 import sys
 import logging
-from typing import Any, Dict, List  # pylint: disable=W0611
+from typing import Any, Dict, List
 
 from django.conf import settings
 from rosetta.poutil import find_pos
@@ -17,16 +17,16 @@ from po2xls.converters import PoToXls
 from po2xls.exceptions import ConversionError
 
 
-__all__ = ["Command"]  # type: List[str]
+__all__: List[str] = ["Command"]
 
 
 class Command(BaseCommand):
-    """
-    Convert project translation files to excel.
-    """
+    """Convert project translation files to excel."""
 
-    ALL = "all"
-    help = str(_("Convert project translation files to Excel format"))
+    ALL: str = "all"
+    help: str = str(  # noqa: A003
+        _("Convert project translation files to Excel format")
+    )
     logger = logging.getLogger(name=__name__)
 
     def add_arguments(self, parser: CommandParser) -> None:
@@ -36,7 +36,6 @@ class Command(BaseCommand):
         :param parser: command arguments parser instance
         :type parser: CommandParser
         """
-
         parser.add_argument(
             "--locale",
             "-l",
@@ -65,7 +64,6 @@ class Command(BaseCommand):
         :param kwargs: additional args
         :type kwargs: Dict[str, Any]
         """
-
         locale = kwargs.get("locale", self.ALL)
 
         if all([locale == self.ALL, settings.LANGUAGES]):
@@ -74,7 +72,9 @@ class Command(BaseCommand):
         elif all([settings.LANGUAGES, locale in dict(settings.LANGUAGES)]):
             self.convert(locale=locale, **kwargs)  # type: ignore
 
-    def convert(self, locale: str, *args: List[Any], **kwargs: Dict[str, Any]) -> None:
+    def convert(  # noqa: CCR001
+        self, locale: str, *args: List[Any], **kwargs: Dict[str, Any]
+    ) -> None:
         """
         Run converter.
 
@@ -85,7 +85,6 @@ class Command(BaseCommand):
         :param kwargs: additional args
         :type kwargs: Dict[str, Any]
         """
-
         quiet = kwargs.get("quiet", False)
 
         for po in find_pos(lang=locale):

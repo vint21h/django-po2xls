@@ -4,17 +4,15 @@
 # po2xls/exceptions.py
 
 
-from typing import List  # pylint: disable=W0611
+from typing import List
 
 
-__all__ = [
+__all__: List[str] = [
     "ConversionError",
-]  # type: List[str]
+]
 
 
 class ConversionError(Exception):
-    """
-    Problem while converting exception.
-    """
+    """Problem while converting exception."""
 
     ...

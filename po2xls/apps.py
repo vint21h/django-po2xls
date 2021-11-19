@@ -4,19 +4,17 @@
 # po2xls/apps.py
 
 
-from typing import List  # pylint: disable=W0611
+from typing import List
 
 from django.apps import AppConfig
 from django.utils.translation import gettext_lazy as _
 
 
-__all__ = ["DjangoPoToXlsConfig"]  # type: List[str]
+__all__: List[str] = ["DjangoPoToXlsConfig"]
 
 
 class DjangoPoToXlsConfig(AppConfig):
-    """
-    Application config.
-    """
+    """Application config."""
 
-    name = "po2xls"  # type: str
-    verbose_name = _("Convert .po to .xls")  # type: str
+    name: str = "po2xls"
+    verbose_name: str = _("Convert .po to .xls")

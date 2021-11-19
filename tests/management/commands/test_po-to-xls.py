@@ -6,8 +6,8 @@
 
 import os
 import pathlib
+from typing import List
 from importlib import import_module
-from typing import List  # pylint: disable=W0611
 
 from django.test import TestCase
 
@@ -17,30 +17,22 @@ from django.test import TestCase
 Command = import_module("po2xls.management.commands.po-to-xls").Command  # type: ignore
 
 
-__all__ = ["CommandTest"]  # type: List[str]
+__all__: List[str] = ["CommandTest"]
 
 
 class CommandTest(TestCase):
-    """
-    po-to-xls management command tests.
-    """
+    """po-to-xls management command tests."""
 
     @classmethod
     def tearDownClass(cls) -> None:
-        """
-        Tear down.
-        """
-
+        """Tear down."""
         os.remove("po2xls/locale/uk/LC_MESSAGES/django.xls")
         os.remove("po2xls/locale/en/LC_MESSAGES/django.xls")
 
         super().tearDownClass()
 
     def test_convert(self) -> None:
-        """
-        convert method must write converted data to .xls files for chosen locale.
-        """
-
+        """convert method must write converted data to .xls files for chosen locale."""  # noqa: D403,E501
         Command().convert(locale="uk")
 
         self.assertTrue(
@@ -48,10 +40,7 @@ class CommandTest(TestCase):
         )
 
     def test_convert__all(self) -> None:
-        """
-        convert method must write converted data to .xls files for all locales.
-        """
-
+        """convert method must write converted data to .xls files for all locales."""  # noqa: D403,E501
         Command().handle()
 
         self.assertTrue(

@@ -5,7 +5,7 @@
 
 
 from pathlib import Path
-from typing import Any, Dict, List  # pylint: disable=W0611
+from typing import Any, Dict, List
 
 import xlwt
 import polib
@@ -13,22 +13,20 @@ import polib
 from po2xls.exceptions import ConversionError
 
 
-__all__ = [
+__all__: List[str] = [
     "PoToXls",
-]  # type: List[str]
+]
 
 
 class PoToXls:
-    """
-    .po to .xls converter.
-    """
+    """.po to .xls converter."""
 
-    HEADERS = {
+    HEADERS: Dict[str, List[str]] = {
         "strings": ["msgid", "msgstr"],
         "metadata": ["key", "value"],
     }
-    METADATA_SHEET_NAME = "metadata"
-    STRINGS_SHEET_NAME = "strings"
+    METADATA_SHEET_NAME: str = "metadata"
+    STRINGS_SHEET_NAME: str = "strings"
 
     def __init__(self, src: str, *args: List[Any], **kwargs: Dict[str, Any]) -> None:
         """
@@ -40,20 +38,19 @@ class PoToXls:
         :type args: List[Any]
         :param kwargs: additional args
         :type kwargs: Dict[str, Any]
-        :raises ConversionError: raised when file does not exists, IO errors or file format problems  # noqa: E501
-        """
-
-        self.src = Path(src)  # type: Path
+        :raises ConversionError: raised when file does not exists, IO errors or file format problems
+        """  # noqa: E501
+        self.src: Path = Path(src)
 
         if not self.src.exists():
             raise ConversionError(f"ERROR: File '{src}' does not exists.")
 
         try:
-            self.po = polib.pofile(pofile=str(self.src))  # type: polib.POFile
+            self.po: polib.POFile = polib.pofile(pofile=str(self.src))
         except (ValueError, IOError) as error:
             raise ConversionError(f"ERROR: '{src}' - file problem: {error}")
 
-        self.result = xlwt.Workbook(encoding="utf-8")  # type: xlwt.Workbook
+        self.result: xlwt.Workbook = xlwt.Workbook(encoding="utf-8")
 
     def header(self, sheet: xlwt.Worksheet, name: str) -> None:
         """
@@ -64,10 +61,9 @@ class PoToXls:
         :param name: sheet name
         :type name: str
         """
+        header: xlwt.Row = sheet.row(0)
 
-        header = sheet.row(0)  # type: xlwt.Row
-
-        for i, column in enumerate(  # pylint: disable=W0612  # noqa: B007  # noqa: E501
+        for i, column in enumerate(  # pylint: disable=W0612  # noqa: B007
             self.HEADERS[name]
         ):
             header.write(i, self.HEADERS[name][i])
@@ -84,43 +80,36 @@ class PoToXls:
         :return: path to .xls file
         :rtype: Path
         """
-
         return src.parent.joinpath(f"{src.stem}.xls")
 
     def strings(self) -> None:
-        """
-        Write strings sheet.
-        """
-
-        sheet = self.result.add_sheet(self.STRINGS_SHEET_NAME)  # type: xlwt.Worksheet
+        """Write strings sheet."""
+        sheet: xlwt.Worksheet = self.result.add_sheet(self.STRINGS_SHEET_NAME)
         self.header(sheet=sheet, name=self.STRINGS_SHEET_NAME)
 
-        row_i = 1  # type: int  # row number (first after header)
+        row_i: int = 1  # row number (first after header)
 
         for entry in self.po:
-            row = sheet.row(indx=row_i)  # type: xlwt.Row
+            row: xlwt.Row = sheet.row(indx=row_i)
             row.write(0, entry.msgid)
             row.write(1, entry.msgstr)
-            row_i += 1
+            row_i += 1  # noqa: SIM113
             sheet.flush_row_data()
 
     def metadata(self) -> None:
-        """
-        Write metadata sheet.
-        """
-
-        sheet = self.result.add_sheet(
+        """Write metadata sheet."""
+        sheet: xlwt.Worksheet = self.result.add_sheet(
             sheetname=self.METADATA_SHEET_NAME
-        )  # type: xlwt.Worksheet
+        )
         self.header(sheet=sheet, name=self.METADATA_SHEET_NAME)
 
-        row_i = 1  # type: int  # row number (first after header)
+        row_i: int = 1  # row number (first after header)
 
         for data in self.po.metadata:
-            row = sheet.row(indx=row_i)  # type: xlwt.Row
+            row: xlwt.Row = sheet.row(indx=row_i)
             row.write(0, data)
             row.write(1, self.po.metadata[data])
-            row_i += 1
+            row_i += 1  # noqa: SIM113
             sheet.flush_row_data()
 
     def convert(self, *args: List[Any], **kwargs: Dict[str, Any]) -> None:
@@ -132,7 +121,6 @@ class PoToXls:
         :param kwargs: additional args
         :type kwargs: Dict[str, Any]
         """
-
         self.strings()
         self.metadata()
         self.result.save(filename_or_stream=self.output(src=self.src))
